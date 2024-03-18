@@ -1,0 +1,197 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canola Nutrient and Fertilizer Calculator</title>
+</head>
+<body>
+    <h1>Canola Nutrient and Fertilizer Calculator</h1>
+
+    <div>
+        <h2>Nutrient Removal Based on Last Year's Yield</h2>
+        <p>Enter the previous year's yield in lb/acre for Canola:</p>
+        <input type="number" id="previousYieldInput" placeholder="Previous year's yield in lb/acre">
+    </div>
+
+    <div>
+        <h2>Calculate Fertilizer Requirements Based on Yield Goal</h2>
+        <p>Enter your yield goal in lb/acre for Canola:</p>
+        <input type="number" id="yieldGoalInput" placeholder="Yield goal in lb/acre">
+        <button onclick="integratedCalculation()">Calculate</button>
+    </div>
+
+    <h2>Results</h2>
+    <div>
+        <h3>Nutrient Removal</h3>
+        <p>N (Nitrogen) Removal: <span id="resultNRemoval"></span> lb/acre</p>
+        <p>P2O5 (Phosphorus Pentoxide) Removal: <span id="resultP2O5Removal"></span> lb/acre</p>
+        <p>K2O (Potassium Oxide) Removal: <span id="resultK2ORemoval"></span> lb/acre</p>
+        <p>S (Sulfur) Removal: <span id="resultSRemoval"></span> lb/acre</p>
+    </div>
+    <div>
+        <h3>Uptake Based on Yield Goal</h3>
+        <p>N (Nitrogen) Uptake: <span id="resultNUptake"></span> lb/acre</p>
+        <p>P2O5 (Phosphorus Pentoxide) Uptake: <span id="resultP2O5Uptake"></span> lb/acre</p>
+        <p>K2O (Potassium Oxide) Uptake: <span id="resultK2OUptake"></span> lb/acre</p>
+        <p>S (Sulfur) Uptake: <span id="resultSUptake"></span> lb/acre</p>
+    </div>
+    <div>
+        <h3>Fertilizer Requirements (Considering Nutrient Removal)</h3>
+        <p>N (Nitrogen) Required Fertilizer: <span id="resultNRequired"></span> lb/acre</p>
+        <p>P2O5 (Phosphorus Pentoxide) Required Fertilizer: <span id="resultP2O5Required"></span> lb/acre</p>
+        <p>K2O (Potassium Oxide) Required Fertilizer: <span id="resultK2ORequired"></span> lb/acre</p>
+        <p>S (Sulfur) Required Fertilizer: <span id="resultSRequired"></span> lb/acre</p>
+    </div>
+
+    <script src="nutrientCalculator.js"></script>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canola Nutrient and Fertilizer Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #000;
+        }
+        .header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .logo {
+            max-width: 100px;
+            height: auto;
+            margin-right: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #000000;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        h2 {
+            color: #000000;
+        }
+        .result {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .result h3 {
+            color: #333;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .nutrient {
+            margin-bottom: 10px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%; /* Adjust width to take up full container */
+        }
+        .vstack {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img class="logo" src="logo.png" alt="Your Logo">
+        <h1>Canola Nutrient and Fertilizer Calculator</h1>
+    </div>
+
+    <div class="container">
+        <h2>Nutrient Removal Based on Last Year's Yield</h2>
+        <div class="nutrient">
+            <label for="previousYieldInput">Prev. Year's Yield (lb/acre):</label>
+            <input type="number" id="previousYieldInput" placeholder="Previous year's yield">
+        </div>
+        
+        <div class="nutrient">
+            <label for="omInput">Soil Organic Matter (%):</label>
+            <input type="number" id="omInput" placeholder="Soil Organic Matter percentage">
+        </div>
+        
+        <h2>Calculate Fertilizer Requirements Based on Yield Goal</h2>
+        <div class="nutrient">
+            <label for="yieldGoalInput">Yield Goal (lb/acre):</label>
+            <input type="number" id="yieldGoalInput" placeholder="Yield goal">
+        </div>
+        
+        <button onclick="integratedCalculation()">Calculate</button>
+
+        <div class="result">
+            <div class="card vstack">
+                <h3>Previous Year Nutrient Removal</h3>
+                <p>N: <span id="resultNRemoval"></span> </p>
+                <p>P2O5: <span id="resultP2O5Removal"></span> </p>
+                <p>K2O: <span id="resultK2ORemoval"></span> </p>
+                <p>S: <span id="resultSRemoval"></span> </p>
+            </div>
+            <div class="card vstack">
+                <h3>Uptake Based on Yield Goal</h3>
+                <p>N: <span id="resultNUptake"></span> </p>
+                <p>P2O5: <span id="resultP2O5Uptake"></span> </p>
+                <p>K2O: <span id="resultK2OUptake"></span> </p>
+                <p>S: <span id="resultSUptake"></span> </p>
+            </div>
+            <div class="card vstack">
+                <h3>Fertilizer Requirements</h3>
+                <p>N: <span id="resultNRequired"></span> </p>
+                <p>P2O5: <span id="resultP2O5Required"></span> </p>
+                <p>K2O: <span id="resultK2ORequired"></span> </p>
+                <p>S: <span id="resultSRequired"></span> </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="nutrientCalculator.js"></script>
+</body>
+</html>
+
+
